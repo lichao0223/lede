@@ -28,8 +28,7 @@ define KernelPackage/can
 	CONFIG_CAN_SOFTING=n \
 	CONFIG_NET_EMATCH_CANID=n \
 	CONFIG_CAN_DEBUG_DEVICES=n
-  FILES:=$(LINUX_DIR)/drivers/net/can/can-dev.ko@lt5.4 \
-	 $(LINUX_DIR)/drivers/net/can/dev/can-dev.ko@ge5.4 \
+  FILES:=$(LINUX_DIR)/drivers/net/can/dev/can-dev.ko \
 	 $(LINUX_DIR)/net/can/can.ko
   AUTOLOAD:=$(call AutoProbe,can can-dev)
 endef
@@ -122,7 +121,7 @@ define KernelPackage/can-flexcan
   KCONFIG:=CONFIG_CAN_FLEXCAN
   FILES:=$(LINUX_DIR)/drivers/net/can/flexcan.ko
   AUTOLOAD:=$(call AutoProbe,flexcan)
-  $(call AddDepends/can,@TARGET_imx6)
+  $(call AddDepends/can,@TARGET_imx)
 endef
 
 define KernelPackage/can-flexcan/description
@@ -153,7 +152,7 @@ define KernelPackage/can-mcp251x
 	CONFIG_SPI=y \
 	CONFIG_CAN_MCP251X
   FILES:=$(LINUX_DIR)/drivers/net/can/spi/mcp251x.ko
-  AUTOLOAD:=$(call AutoProbe,can-mcp251x)
+  AUTOLOAD:=$(call AutoProbe,mcp251x)
   $(call AddDepends/can)
 endef
 
@@ -249,8 +248,7 @@ define KernelPackage/can-usb-kvaser
   TITLE:=Kvaser CAN/USB interface
   KCONFIG:=CONFIG_CAN_KVASER_USB
   FILES:= \
-	$(LINUX_DIR)/drivers/net/can/usb/kvaser_usb.ko@lt4.19 \
-	$(LINUX_DIR)/drivers/net/can/usb/kvaser_usb/kvaser_usb.ko@ge4.19
+	$(LINUX_DIR)/drivers/net/can/usb/kvaser_usb/kvaser_usb.ko
   AUTOLOAD:=$(call AutoProbe,kvaser_usb)
   $(call AddDepends/can,+kmod-usb-core)
 endef
